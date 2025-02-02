@@ -1,6 +1,7 @@
 import type {Metadata} from "next"
 import {Geist, Geist_Mono} from "next/font/google"
 import {ClerkClientProvider} from "./_components/providers/clerk-provider"
+import { Providers } from "./_components/providers/providers"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -30,7 +31,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ClerkClientProvider>
-          {children}
+          <Providers>
+            {children}
+          </Providers>
         </ClerkClientProvider>
       </body>
     </html>

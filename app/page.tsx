@@ -1,6 +1,12 @@
 import Image from "next/image"
+import {auth} from "@clerk/nextjs"
+import Link from "next/link"
+import {Button} from "@/components/ui/button"
 
-export default function Home() {
+export default async function Home() {
+  const {userId} = await auth()
+  const isAuthenticated = !!userId
+
   return (
     <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
       <main className='flex flex-col gap-8 row-start-2 items-center sm:items-start'>
@@ -12,6 +18,22 @@ export default function Home() {
           height={38}
           priority
         />
+        <div className='flex gap-4'>
+          {isAuthenticated ? (
+            <Link href='/dashboard'>
+              <Button>Go to Dashboard</Button>
+            </Link>
+          ) : (
+            <>
+              <Link href='/sign-in'>
+                <Button variant='outline'>Sign In</Button>
+              </Link>
+              <Link href='/sign-up'>
+                <Button>Sign Up</Button>
+              </Link>
+            </>
+          )}
+        </div>
         <ol className='list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]'>
           <li className='mb-2'>
             Let&apos;s
