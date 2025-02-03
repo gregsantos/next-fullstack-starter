@@ -34,7 +34,7 @@ export default function RootLayout({
         <ClerkClientProvider>
           <Providers>
             <Navbar />
-            <div className='mt-14'>{children}</div>
+            <div className='mt-16'>{children}</div>
           </Providers>
         </ClerkClientProvider>
       </body>

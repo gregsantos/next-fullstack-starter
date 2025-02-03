@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import Link from "next/link"
 import {UserButton} from "@clerk/nextjs"
@@ -9,17 +9,20 @@ export function Navbar() {
   const {isSignedIn} = useAuth()
 
   return (
-    <nav className='fixed top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      <div className='container flex h-14 items-center justify-between'>
-        <Link href='/' className='font-semibold'>
+    <nav className='fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+      <div className='w-full max-w-[2000px] mx-auto flex h-16 items-center px-4 sm:px-8'>
+        <Link
+          href='/'
+          className='text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity'
+        >
           Fullstack Starter
         </Link>
 
-        <div className='flex items-center gap-4'>
+        <div className='ml-auto flex items-center gap-2 sm:gap-4'>
           {isSignedIn ? (
             <>
-              <Link href='/dashboard'>
-                <Button variant='outline' size='sm'>
+              <Link href='/dashboard' className='hidden sm:block'>
+                <Button variant='ghost' size='sm' className='font-medium'>
                   Dashboard
                 </Button>
               </Link>
@@ -27,7 +30,8 @@ export function Navbar() {
                 afterSignOutUrl='/'
                 appearance={{
                   elements: {
-                    avatarBox: 'w-8 h-8',
+                    avatarBox: "w-9 h-9",
+                    userButtonPopoverCard: "w-[240px]",
                   },
                 }}
               />
@@ -35,12 +39,25 @@ export function Navbar() {
           ) : (
             <>
               <Link href='/sign-in'>
-                <Button variant='outline' size='sm'>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className='font-medium hidden sm:inline-flex'
+                >
                   Sign In
+                </Button>
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className='font-medium sm:hidden'
+                >
+                  Login
                 </Button>
               </Link>
               <Link href='/sign-up'>
-                <Button size='sm'>Sign Up</Button>
+                <Button size='sm' className='font-medium shadow-sm'>
+                  Sign Up
+                </Button>
               </Link>
             </>
           )}
@@ -48,4 +65,4 @@ export function Navbar() {
       </div>
     </nav>
   )
-} 
+}
