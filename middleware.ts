@@ -1,13 +1,8 @@
-import { authMiddleware } from "@clerk/nextjs"
-import { NextResponse } from "next/server"
+import {authMiddleware} from "@clerk/nextjs"
+import {NextResponse} from "next/server"
 
 export default authMiddleware({
-  publicRoutes: [
-    "/",
-    "/api/public(.*)",
-    "/sign-in(.*)",
-    "/sign-up(.*)",
-  ],
+  publicRoutes: ["/", "/sign-in", "/sign-up"],
   afterAuth(auth, req) {
     // Handle authentication result
     if (!auth.userId && !auth.isPublicRoute) {
@@ -18,16 +13,17 @@ export default authMiddleware({
     }
 
     // Redirect signed in users to dashboard if they try to access auth pages
-    if (auth.userId && (
-      req.nextUrl.pathname.startsWith('/sign-in') ||
-      req.nextUrl.pathname.startsWith('/sign-up')
-    )) {
+    if (
+      auth.userId &&
+      (req.nextUrl.pathname.startsWith("/sign-in") ||
+        req.nextUrl.pathname.startsWith("/sign-up"))
+    ) {
       // Check if there's a redirect_url in the query params
       const redirectUrl = req.nextUrl.searchParams.get("redirect_url")
       if (redirectUrl) {
         return NextResponse.redirect(new URL(redirectUrl, req.url))
       }
-      return NextResponse.redirect(new URL('/dashboard', req.url))
+      return NextResponse.redirect(new URL("/dashboard", req.url))
     }
 
     return NextResponse.next()
@@ -36,9 +32,5 @@ export default authMiddleware({
 
 // Configure Middleware Matcher
 export const config = {
-  matcher: [
-    "/((?!.+\\.[\\w]+$|_next).*)",
-    "/",
-    "/(api|trpc)(.*)",
-  ],
-} 
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+}
