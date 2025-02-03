@@ -1,7 +1,8 @@
 import type {Metadata} from "next"
 import {Geist, Geist_Mono} from "next/font/google"
 import {ClerkClientProvider} from "./_components/providers/clerk-provider"
-import { Providers } from "./_components/providers/providers"
+import {Providers} from "./_components/providers/providers"
+import {Navbar} from "./_components/navbar"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -32,7 +33,8 @@ export default function RootLayout({
       >
         <ClerkClientProvider>
           <Providers>
-            {children}
+            <Navbar />
+            <div className='mt-14'>{children}</div>
           </Providers>
         </ClerkClientProvider>
       </body>
